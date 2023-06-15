@@ -1,6 +1,6 @@
 # MyToken
 
-This is a simple contract created in Solidity that is meant to represent a token instantiation. It has two functions, mint and burn which will allow the user to update and retrieve the token's overall supply as well as the balances of the sender addresses.
+This is a simple contract created in Solidity that is a basic demonstration of how ethereum tokens work. It has two functions, mint and burn which will allow the user to update and retrieve the token's overall supply as well as the balances of the sender addresses.
 
 ### Executing program
 
