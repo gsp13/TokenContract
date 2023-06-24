@@ -1,37 +1,48 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.18;
 
-
+/*For this project, 
+write a smart contract that implements the require(), assert() and revert() statements.
+*/
 contract MyToken {
 
-    /* 1. Your contract will have public variables that store the details about your coin
-     (Token Name, Token Abbrv., Total Supply) */
     string public tokenName = "DRACHMA";
     string public tokenAbbrv = "DRC";
     uint public totalSupply=0;
-
-    //2. Your contract will have a mapping of addresses to balances (address => uint)
+    address senderAddress;
       mapping(address => uint) public balances;
-      
-    /* 3.  You will have a mint function that takes two parameters: an address and a value. 
-       The function then increases the total supply by that number and increases the balance 
-       of the “sender” address by that amount */
-    function mint(address _senderAddress,uint _tokenAmount) public {
-        totalSupply += _tokenAmount;
-        balances[_senderAddress] += _tokenAmount;
-    }
-    /* 
-        4. Your contract will have a burn function, which works the opposite of the mint function, as it will destroy tokens. 
-       It will take an address and value just like the mint functions. It will then deduct the value from the total supply 
-       and from the balance of the “sender”.
-           5. Lastly, your burn function should have conditionals to make sure the balance of "sender" is greater than or equal 
-       to the amount that is supposed to be burned.
 
-    */
-    function burn(address _senderAddress,uint _tokenAmount) public {
-       if(balances[_senderAddress]>=_tokenAmount){
-            totalSupply -= _tokenAmount;
-            balances[_senderAddress] -= _tokenAmount;
-       }
+    constructor() { 
+        senderAddress = msg.sender; //address deploying transaction should also be identified as th owner
+    } 
+
+    function mint(uint _tokenAmount) public {
+        totalSupply += _tokenAmount;
+        balances[senderAddress] += _tokenAmount;
+        assert(balances[senderAddress]<= totalSupply);
     }
+    error InsufficientBalance(uint currentBalance, uint tokenAmount);
+
+    function burn(uint _tokenAmount) public{
+        if (_tokenAmount >=balances[senderAddress]) {
+            revert InsufficientBalance(
+                {currentBalance:balances[senderAddress], tokenAmount: _tokenAmount} 
+                );
+        }
+        totalSupply -= _tokenAmount;
+        balances[senderAddress] -= _tokenAmount;
+    }
+
+    function transfer (address _receiverAddress, uint _tokenAmount) public{
+        require(senderAddress != _receiverAddress, "You cannot send money to your own account");
+        require(balances[senderAddress] >= _tokenAmount, "Amount of tokens to be transferred exceeds balance for this sender account");
+        balances[senderAddress]-= _tokenAmount;
+        balances[_receiverAddress]+= _tokenAmount;
+    }
+
+    function assertTransactionOwnership () public view {
+       //asserts to check that sender address is always the same to the address that is currently deploying transaction
+        assert (msg.sender == senderAddress);
+    }
+
 }
