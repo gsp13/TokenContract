@@ -1,6 +1,6 @@
 # MyToken
 
-This is a simple contract created in Solidity that is a basic demonstration of how ethereum tokens work. It has two functions, mint and burn which will allow the user to update and retrieve the token's overall supply as well as the balances of the sender addresses.
+This is a simple contract created in Solidity that is a basic demonstration of how ethereum tokens work with error handling techniques ( assert,revert and require). It has three functions, mint, burn and transact which will allow the user to update and retrieve the token's overall supply as well as the balances of the sender addresses.
 
 ### Executing program
 
@@ -15,22 +15,30 @@ Once the contract is deployed, you can interact with it by running the following
 ### Mint Function
 ```
 Example Input:
-   _senderAddress: 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2
    _tokenAmount: 500
 ```
-Increases the total supply and  provided sender address balance with the inputted token amount.
+Increases the total supply and  sender address(address deploying the contract) with the inputted token amount.
 Verify that this is working as intended by calling balances and totalsupply
 
 
 ### Burn Function
 ```
 Example Input:
-   _senderAddress: 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2
    _tokenAmount: 200
 ```
-Decreases the total supply and  provided sender address balance with the inputted token amount.
-It will run but will not decrease the amount if the value is greater than the balance of the provided sender address.
-Verify that this is working as intended by calling balances and totalsupply
+Decreases the total supply of account deploying the contract with the inputted token amount.
+It will issue an error code and will not decrease the amount if the value is greater than the balance of the address deplyoying the contract.
+Verify that this is working as intended by calling balances and totalsupply 
+
+
+
+### Burn Function
+```
+Example Input:
+   _receiverAddress: 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2
+   _tokenAmount: 200
+```
+Transfers the provided amount from address deploying the contract to the provided receiver address. It will issue an error code if provided address is same as the deployed contract(or attempting to send money to your own account) or if the balance of sender is insufficient to facilitate the transfer to receiver address.
 
 ## Authors
 
