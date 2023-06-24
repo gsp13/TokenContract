@@ -32,7 +32,7 @@ Verify that this is working as intended by calling balances and totalsupply
 
 
 
-### Burn Function
+### Transfer Function
 ```
 Example Input:
    _receiverAddress: 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2
