@@ -1,6 +1,6 @@
 # MyToken
 
-This is a simple contract created in Solidity that is a basic demonstration of how ethereum tokens work with error handling techniques ( assert,revert and require). It has three functions, mint, burn and transact which will allow the user to update and retrieve the token's overall supply as well as the balances of the sender addresses.
+This is a simple contract created in Solidity that is a basic demonstration of how ethereum tokens work with error handling techniques ( assert,revert and require). It has three functions, mint, burn and transact which will allow the user to update and retrieve the token's overall supply as well as the balances of the available addresses.
 
 ### Executing program
 
